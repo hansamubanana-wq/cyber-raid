@@ -1,45 +1,28 @@
 import './style.css'
 import Phaser from 'phaser'
+import GameScene from './scenes/GameScene'
 
-// ゲームの設定
 const config: Phaser.Types.Core.GameConfig = {
-  type: Phaser.AUTO, // ブラウザに合わせて最適な描画モード（WebGLかCanvas）を自動選択
-  width: 800,        // ゲーム画面の幅
-  height: 600,       // ゲーム画面の高さ
-  parent: 'app',     // HTMLの <div id="app"> の中にゲームを埋め込む
-  backgroundColor: '#2d2d2d', // 背景色（ダークグレー）
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  parent: 'app',
+  backgroundColor: '#1d212d', // 少しリッチな暗い色に変更
   physics: {
-    default: 'arcade', // シンプルな物理演算モードを使用
+    default: 'arcade',
     arcade: {
-      gravity: { x: 0, y: 0 }, // 重力設定（今はゼロ）
-      debug: false
+      gravity: { x: 0, y: 0 }, // 全体の重力は0（プレイヤー個別に設定するため）
+      debug: false // 当たり判定を可視化したい時は true にする
     }
   },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
+  // 作成した GameScene をリストに登録
+  scene: [GameScene],
+  
+  // スマホ対応：画面サイズに合わせて拡大縮小する設定
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
   }
 };
 
-// ゲームインスタンスの作成
 new Phaser.Game(config);
-
-// 1. 画像などの素材を読み込む場所
-function preload(this: Phaser.Scene) {
-  // 今はまだ何もしない
-}
-
-// 2. 画面にオブジェクトを配置する場所
-function create(this: Phaser.Scene) {
-  // 動作確認用のテキストを表示
-  this.add.text(400, 300, 'Cyber Raid Initiated...', { 
-    fontSize: '32px', 
-    color: '#00ff00' 
-  }).setOrigin(0.5);
-}
-
-// 3. 毎フレーム実行されるループ処理
-function update(this: Phaser.Scene) {
-  // 今はまだ何もしない
-}
